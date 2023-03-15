@@ -1,11 +1,14 @@
 package com.josmejia2401.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class TaskDTO {
+public class TaskDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private long id;
 
@@ -21,7 +24,10 @@ public class TaskDTO {
 	private int duration;
 
 	@NotNull(message = "Status may not be empty")
-	private int status;
+	private StatusDTO status;
+
+	@NotNull(message = "priority may not be empty")
+	private PriorityDTO priority;
 
 	private List<TaskDTO> childId;
 
@@ -33,21 +39,15 @@ public class TaskDTO {
 			@NotEmpty(message = "Name may not be empty") @NotNull(message = "Name may not be null") String name,
 			@NotEmpty(message = "Description may not be empty") @NotNull(message = "Description may not be null") String description,
 			@NotNull(message = "Duration may not be empty") int duration,
-			@NotNull(message = "Status may not be empty") int status, List<TaskDTO> childId) {
+			@NotNull(message = "Status may not be empty") StatusDTO status,
+			@NotNull(message = "priority may not be empty") PriorityDTO priority, List<TaskDTO> childId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.duration = duration;
 		this.status = status;
-		this.childId = childId;
-	}
-
-	public List<TaskDTO> getChildId() {
-		return childId;
-	}
-
-	public void setChildId(List<TaskDTO> childId) {
+		this.priority = priority;
 		this.childId = childId;
 	}
 
@@ -83,12 +83,34 @@ public class TaskDTO {
 		this.duration = duration;
 	}
 
-	public int getStatus() {
+	public StatusDTO getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(StatusDTO status) {
 		this.status = status;
+	}
+
+	public PriorityDTO getPriority() {
+		return priority;
+	}
+
+	public void setPriority(PriorityDTO priority) {
+		this.priority = priority;
+	}
+
+	public List<TaskDTO> getChildId() {
+		return childId;
+	}
+
+	public void setChildId(List<TaskDTO> childId) {
+		this.childId = childId;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskDTO [id=" + id + ", name=" + name + ", description=" + description + ", duration=" + duration
+				+ ", status=" + status + ", priority=" + priority + ", childId=" + childId + "]";
 	}
 
 }

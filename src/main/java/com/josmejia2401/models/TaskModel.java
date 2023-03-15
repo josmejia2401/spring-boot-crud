@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -35,9 +36,15 @@ public class TaskModel {
 	@Column(name = "duration")
 	private int duration;
 
+	@OneToOne
 	@NotNull(message = "Status may not be empty")
-	@Column(name = "status")
-	private int status;
+	@JoinColumn(name = "status", nullable = true)
+	private StatusModel status;
+
+	@OneToOne
+	@NotNull(message = "Priority may not be empty")
+	@JoinColumn(name = "priority", nullable = true)
+	private PriorityModel priority;
 
 	@OneToMany
 	@JoinColumn(name = "child_id", nullable = true)
@@ -51,21 +58,15 @@ public class TaskModel {
 			@NotEmpty(message = "Name may not be empty") @NotNull(message = "Name may not be null") String name,
 			@NotEmpty(message = "Description may not be empty") @NotNull(message = "Description may not be null") String description,
 			@NotNull(message = "Duration may not be empty") int duration,
-			@NotNull(message = "Status may not be empty") int status, List<TaskModel> childId) {
+			@NotNull(message = "Status may not be empty") StatusModel status,
+			@NotNull(message = "Prority may not be empty") PriorityModel priority, List<TaskModel> childId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.duration = duration;
 		this.status = status;
-		this.childId = childId;
-	}
-
-	public List<TaskModel> getChildId() {
-		return childId;
-	}
-
-	public void setChildId(List<TaskModel> childId) {
+		this.priority = priority;
 		this.childId = childId;
 	}
 
@@ -101,12 +102,28 @@ public class TaskModel {
 		this.duration = duration;
 	}
 
-	public int getStatus() {
+	public StatusModel getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(StatusModel status) {
 		this.status = status;
+	}
+
+	public PriorityModel getPriority() {
+		return priority;
+	}
+
+	public void setPriority(PriorityModel prority) {
+		this.priority = prority;
+	}
+
+	public List<TaskModel> getChildId() {
+		return childId;
+	}
+
+	public void setChildId(List<TaskModel> childId) {
+		this.childId = childId;
 	}
 
 }

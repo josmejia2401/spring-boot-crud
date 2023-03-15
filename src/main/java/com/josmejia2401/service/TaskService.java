@@ -55,7 +55,7 @@ public class TaskService implements ITaskService {
 		if (newTrask == null) {
 			return;
 		}
-		Status status = Status.findById(task.getStatus());
+		Status status = Status.findById((int) task.getStatus().getId());
 		if (status == null) {
 			throw new CustomException("Status not found");
 		}

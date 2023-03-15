@@ -49,11 +49,11 @@ public class TaskController {
 	}
 
 	@GetMapping("/tasks/{id}")
-	public ResponseEntity<TaskDTO> getTasklById(@PathVariable("id") long id) {
+	public ResponseEntity<TaskDTO> getTaskById(@PathVariable("id") long id) {
 		try {
-			TaskDTO tutorialData = this.taskService.getById(id);
-			if (tutorialData != null) {
-				return new ResponseEntity<>(tutorialData, HttpStatus.OK);
+			TaskDTO taskData = this.taskService.getById(id);
+			if (taskData != null) {
+				return new ResponseEntity<>(taskData, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
@@ -64,9 +64,11 @@ public class TaskController {
 	}
 
 	@PostMapping("/tasks")
-	public ResponseEntity<TaskDTO> createTask(@Valid @RequestBody TaskDTO tutorial) {
+	public ResponseEntity<TaskDTO> createTask(@Valid @RequestBody TaskDTO task) {
 		try {
-			TaskDTO item = this.taskService.create(tutorial);
+			LOGGER.info(task.toString());
+			LOGGER.debug(task.toString());
+			TaskDTO item = this.taskService.create(task);
 			return new ResponseEntity<>(item, HttpStatus.CREATED);
 		} catch (Exception e) {
 			LOGGER.error("TaskController.createTask", e);
@@ -75,13 +77,13 @@ public class TaskController {
 	}
 
 	@PutMapping("/tasks/{id}")
-	public ResponseEntity<TaskDTO> updateTask(@PathVariable("id") long id, @Valid @RequestBody TaskDTO tutorial) {
+	public ResponseEntity<TaskDTO> updateTask(@PathVariable("id") long id, @Valid @RequestBody TaskDTO task) {
 		try {
-			TaskDTO tutorialData = this.taskService.getById(id);
-			if (tutorialData != null) {
-				this.taskService.update(tutorial);
-				tutorial.setId(id);
-				return new ResponseEntity<TaskDTO>(tutorial, HttpStatus.OK);
+			TaskDTO taskData = this.taskService.getById(id);
+			if (taskData != null) {
+				this.taskService.update(task);
+				task.setId(id);
+				return new ResponseEntity<TaskDTO>(task, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
@@ -94,8 +96,8 @@ public class TaskController {
 	@DeleteMapping("/tasks/{id}")
 	public ResponseEntity<HttpStatus> deleteTask(@PathVariable("id") long id) {
 		try {
-			TaskDTO tutorialData = this.taskService.getById(id);
-			if (tutorialData != null) {
+			TaskDTO taskData = this.taskService.getById(id);
+			if (taskData != null) {
 				this.taskService.deleteById(id);
 				return new ResponseEntity<>(null, HttpStatus.OK);
 			} else {
