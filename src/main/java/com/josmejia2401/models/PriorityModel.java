@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "piority")
 public class PriorityModel {
 
 	@Id

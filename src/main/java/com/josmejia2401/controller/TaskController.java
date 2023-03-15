@@ -81,6 +81,7 @@ public class TaskController {
 		try {
 			TaskDTO taskData = this.taskService.getById(id);
 			if (taskData != null) {
+				task.setId(id);
 				this.taskService.update(task);
 				task.setId(id);
 				return new ResponseEntity<TaskDTO>(task, HttpStatus.OK);

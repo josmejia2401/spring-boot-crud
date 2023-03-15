@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.josmejia2401.Application;
 import com.josmejia2401.dto.TaskDTO;
 import com.josmejia2401.exceptions.CustomException;
 import com.josmejia2401.models.TaskModel;
@@ -17,6 +18,9 @@ import com.josmejia2401.utils.mapper.TaskMapper;
 @Service
 public class TaskService implements ITaskService {
 
+	private static final org.apache.logging.log4j.Logger LOGGER = org.apache.logging.log4j.LogManager
+			.getLogger(TaskService.class);
+	
 	@Autowired
 	TaskRepository taskRepository;
 
@@ -63,12 +67,14 @@ public class TaskService implements ITaskService {
 		newTrask.setDuration(task.getDuration());
 		newTrask.setName(task.getName());
 		TaskModel tModel = TaskMapper.convertDTOToModel(newTrask);
-		this.taskRepository.save(tModel);
+		this.taskRepository.saveAndFlush(tModel);
 	}
 
 	@Override
 	public TaskDTO create(TaskDTO task) {
+		LOGGER.info(task.toString());
 		TaskModel model = TaskMapper.convertDTOToModel(task);
+		
 		model = this.taskRepository.save(model);
 		return TaskMapper.convertModelToDTO(model);
 	}
