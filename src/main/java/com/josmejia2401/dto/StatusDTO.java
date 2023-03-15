@@ -2,6 +2,8 @@ package com.josmejia2401.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class StatusDTO  implements Serializable{
@@ -9,6 +11,8 @@ public class StatusDTO  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@NotNull(message = "id may not be empty")
+	@Min(value = 1, message = "ID should not be less than 1")
+	@Max(value = 4, message = "ID should not be greater than 4")
 	private long id;
 
 	private String name;

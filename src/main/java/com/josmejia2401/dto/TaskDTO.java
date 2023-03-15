@@ -26,7 +26,7 @@ public class TaskDTO implements Serializable {
 	@NotNull(message = "Status may not be empty")
 	private StatusDTO status;
 
-	@NotNull(message = "priority may not be empty")
+	@NotNull(message = "priority may not be null")
 	private PriorityDTO priority;
 
 	private List<TaskDTO> childId;
